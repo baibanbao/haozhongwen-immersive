@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>好中文声房</title>
+  <meta name="description" content="一边听公开授权的古典音乐，一边学习好中文概念、例句和炼句方法的沉浸式中文网站。">
+  <meta property="og:title" content="好中文声房">
+  <meta property="og:description" content="听见节奏，写出好中文。">
+  <meta property="og:type" content="website">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f7f5ee;
+      --paper-soft: #eeefe7;
+      --ink: #1d2520;
+      --muted: #657168;
+      --line: rgba(29, 37, 32, 0.16);
+      --line-strong: rgba(29, 37, 32, 0.34);
+      --jade: #2c6c5b;
+      --blue: #355e7d;
+      --red: #a84b3f;
+      --gold: #a97927;
+      --violet: #68527f;
+      --shadow: 0 24px 80px rgba(24, 33, 28, 0.14);
+      --radius: 8px;
+      --serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+      --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      --mono: "SFMono-Regular", "Menlo", "Cascadia Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--paper);
+      color: var(--ink);
+      scroll-behavior: smooth;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      background:
+        linear-gradient(120deg, rgba(44, 108, 91, 0.11), transparent 26rem),
+        linear-gradient(240deg, rgba(168, 75, 63, 0.1), transparent 28rem),
+        linear-gradient(180deg, #fbfaf5, var(--paper-soft) 52%, #f8f5ec);
+      color: var(--ink);
+      font-family: var(--serif);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      content: "";
+      opacity: 0.06;
+      background-image:
+        linear-gradient(90deg, rgba(29, 37, 32, 0.4) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(29, 37, 32, 0.32) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mix-blend-mode: multiply;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+      color: inherit;
+    }
+
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--jade);
+    }
+
+    ::selection {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    #staff {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.42;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.95rem clamp(1rem, 3vw, 3rem);
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 245, 238, 0.84);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .brand strong {
+      font-family: var(--sans);
+      font-size: 1.08rem;
+      letter-spacing: 0.14em;
+      white-space: nowrap;
+    }
+
+    .brand span,
+    .mini {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      min-height: 2.1rem;
+      padding: 0.45rem 0.72rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.38);
+      color: #34423a;
+      font-family: var(--sans);
+      font-size: 0.84rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .wrap {
+      width: min(1420px, calc(100% - clamp(1rem, 4vw, 4rem)));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(20rem, 0.9fr) minmax(24rem, 1.1fr);
+      gap: clamp(1rem, 3vw, 2rem);
+      align-items: stretch;
+      min-height: calc(100vh - 4.4rem);
+      padding: clamp(1.2rem, 4vw, 3rem) 0 1.4rem;
+    }
+
+    .hero-copy,
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-copy {
+      display: grid;
+      align-content: space-between;
+      min-height: 38rem;
+      padding: clamp(1.1rem, 3vw, 2rem);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 12ch;
+      margin-bottom: 1.1rem;
+      font-family: var(--sans);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 650;
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 0.9rem;
+      font-family: var(--sans);
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: 0.45rem;
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.42;
+    }
+
+    .lead {
+      max-width: 40rem;
+      margin-bottom: 1.4rem;
+      color: #37433c;
+      font-size: clamp(1.08rem, 1.7vw, 1.25rem);
+      line-height: 1.9;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .primary,
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.85rem;
+      padding: 0.62rem 1rem;
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      line-height: 1.2;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .ghost {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .primary:hover,
+    .primary:focus-visible,
+    .ghost:hover,
+    .ghost:focus-visible {
+      outline: 0;
+      transform: translateY(-1px);
+    }
+
+    .primary:hover,
+    .primary:focus-visible {
+      background: var(--jade);
+      color: white;
+    }
+
+    .ghost:hover,
+    .ghost:focus-visible {
+      border-color: var(--line-strong);
+      color: var(--ink);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .metric {
+      min-height: 6rem;
+      padding: 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(247, 245, 238, 0.62);
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-family: var(--sans);
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.48;
+    }
+
+    .player {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 1rem;
+      min-height: 38rem;
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    .player-head,
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .player-head h2,
+    .section-head h2 {
+      margin-bottom: 0;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--tone) 13%, transparent), rgba(255, 255, 255, 0.54));
+    }
+
+    .play {
+      display: grid;
+      place-items: center;
+      width: 4.2rem;
+      height: 4.2rem;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--sans);
+      font-size: 1.4rem;
+      box-shadow: 0 16px 40px rgba(29, 37, 32, 0.18);
+    }
+
+    .play:hover,
+    .play:focus-visible {
+      background: var(--tone);
+      outline: 0;
+    }
+
+    .now-title {
+      margin-bottom: 0.28rem;
+      font-family: var(--sans);
+      font-size: clamp(1.15rem, 2vw, 1.55rem);
+      font-weight: 650;
+      line-height: 1.3;
+    }
+
+    .now-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .timeline {
+      overflow: hidden;
+      height: 0.4rem;
+      margin-top: 0.8rem;
+      border-radius: 99px;
+      background: rgba(29, 37, 32, 0.11);
+    }
+
+    .bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--jade), var(--blue), var(--red));
+      transition: width 200ms linear;
+    }
+
+    .track-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .track {
+      display: grid;
+      gap: 0.4rem;
+      align-content: start;
+      min-height: 9.2rem;
+      padding: 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(247, 245, 238, 0.62);
+      text-align: left;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .track:hover,
+    .track:focus-visible,
+    .track.is-active {
+      border-color: color-mix(in srgb, var(--tone) 68%, var(--line));
+      background: color-mix(in srgb, var(--tone) 10%, white);
+      outline: 0;
+      transform: translateY(-1px);
+    }
+
+    .track strong {
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .track span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .fineprint {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    .fineprint a {
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .section {
+      padding: 1.2rem 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(20rem, 0.72fr) minmax(24rem, 1.28fr);
+      gap: clamp(1rem, 3vw, 1.5rem);
+      align-items: start;
+    }
+
+    .card {
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    .lesson-nav,
+    .mode-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .chip {
+      min-height: 2.35rem;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.45);
+      font-family: var(--sans);
+      font-size: 0.86rem;
+      line-height: 1.2;
+    }
+
+    .chip:hover,
+    .chip:focus-visible,
+    .chip[aria-selected="true"],
+    .chip[aria-pressed="true"] {
+      border-color: color-mix(in srgb, var(--tone) 70%, var(--line));
+      background: color-mix(in srgb, var(--tone) 10%, white);
+      outline: 0;
+    }
+
+    .lesson {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .lesson-title {
+      display: grid;
+      gap: 0.65rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .lesson-title p {
+      max-width: 52rem;
+      margin-bottom: 0;
+      color: #37433c;
+      font-size: 1.06rem;
+      line-height: 1.86;
+    }
+
+    .tiles,
+    .examples {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .tile,
+    .example {
+      min-height: 10.5rem;
+      padding: 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(247, 245, 238, 0.58);
+    }
+
+    .tile p,
+    .example p {
+      margin-bottom: 0;
+      color: #344139;
+      font-size: 0.97rem;
+      line-height: 1.78;
+    }
+
+    .example.bad {
+      border-color: rgba(168, 75, 63, 0.34);
+    }
+
+    .example.good {
+      border-color: rgba(44, 108, 91, 0.38);
+    }
+
+    .lab {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .text-field {
+      width: 100%;
+      min-height: 9rem;
+      padding: 0.9rem;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      outline: 0;
+      background: rgba(255, 255, 255, 0.52);
+      font-family: var(--serif);
+      font-size: 1.02rem;
+      line-height: 1.78;
+    }
+
+    .text-field:focus {
+      border-color: var(--jade);
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .output {
+      min-height: 10rem;
+      padding: 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(247, 245, 238, 0.62);
+      color: #334039;
+      font-size: 0.98rem;
+      line-height: 1.78;
+      white-space: pre-wrap;
+    }
+
+    .publish-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .publish-item {
+      min-height: 10rem;
+      padding: 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .publish-item p {
+      margin-bottom: 0;
+      color: #37433c;
+      font-size: 0.94rem;
+      line-height: 1.72;
+    }
+
+    .source-list {
+      display: grid;
+      gap: 0.6rem;
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .source-list li {
+      padding: 0.7rem 0;
+      border-top: 1px solid var(--line);
+      color: #37433c;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .footer {
+      padding: 1.5rem 0 2.5rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .player {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .site-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .metrics,
+      .track-grid,
+      .tiles,
+      .examples,
+      .publish-list {
+        grid-template-columns: 1fr;
+      }
+
+      .stage {
+        grid-template-columns: 1fr;
+      }
+
+      .play {
+        width: 3.7rem;
+        height: 3.7rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .wrap {
+        width: min(100% - 1rem, 1420px);
+      }
+
+      h1 {
+        font-size: clamp(2.6rem, 17vw, 4.6rem);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="staff" aria-hidden="true"></canvas>
+  <div class="shell">
+    <header class="site-header">
+      <div class="brand">
+        <strong>好中文声房</strong>
+        <span>public listening studio</span>
+      </div>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#music">音乐</a>
+        <a href="#learn">短课</a>
+        <a href="#lab">炼句</a>
+        <a href="#publish">上线</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero wrap" id="music">
+        <div class="hero-copy">
+          <div>
+            <p class="mini">Hao Zhongwen</p>
+            <h1>听见节奏，写出好中文。</h1>
+            <p class="lead">这是一个可以直接上线的中文沉浸网站。它不读取你的本地文件，不依赖私人 vault。音乐来自公开授权音源，中文短课已经内嵌，放到 GitHub Pages 上就能让所有人访问。</p>
+            <div class="action-row">
+              <button class="primary" type="button" id="heroPlay">开始聆听</button>
+              <a class="ghost" href="#learn">进入短课</a>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <strong>4</strong>
+              <span>巴赫、肖邦、柴可夫斯基、舒伯特四间听室。</span>
+            </div>
+            <div class="metric">
+              <strong>7</strong>
+              <span>好中文核心概念，全部内嵌，不暴露私人笔记。</span>
+            </div>
+            <div class="metric">
+              <strong>1</strong>
+              <span>一个静态 HTML，适合 GitHub Pages。</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="card player" aria-label="公开音乐播放器">
+          <div class="player-head">
+            <div>
+              <p class="mini">Open Music</p>
+              <h2>公开曲库</h2>
+            </div>
+            <span class="mini" id="stateText">ready</span>
+          </div>
+          <div class="stage" id="stage">
+            <button class="play" id="playButton" type="button" aria-label="播放">▶</button>
+            <div>
+              <div class="now-title" id="nowTitle">巴赫：大提琴无伴奏第一组曲·前奏曲</div>
+              <div class="now-meta" id="nowMeta">秩序、复调、清水。适合读定义。</div>
+              <div class="timeline" aria-hidden="true"><div class="bar" id="progress"></div></div>
+            </div>
+          </div>
+          <div class="track-grid" id="trackGrid"></div>
+          <p class="fineprint">这些曲目用于公开示范。若要换成你的甄选版本，只需替换代码中 `playlist` 的 `src`、`source` 和 `credit` 字段。</p>
+          <audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
+        </section>
+      </section>
+
+      <section class="section wrap" id="learn">
+        <div class="grid-2">
+          <aside class="card">
+            <div class="section-head">
+              <div>
+                <p class="mini">Wiki Course</p>
+                <h2>好中文短课</h2>
+              </div>
+            </div>
+            <p class="lead">公开版不链接你的本地 wiki 文件，而是把可分享的核心内容做成知识卡。这样网页上线后，读者不会碰到本地路径，也不会看到私人资料。</p>
+            <div class="lesson-nav" id="lessonNav"></div>
+          </aside>
+
+          <article class="card lesson" id="lessonCard" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="section wrap" id="lab">
+        <div class="grid-2">
+          <aside class="card">
+            <div class="section-head">
+              <div>
+                <p class="mini">Practice</p>
+                <h2>炼句台</h2>
+              </div>
+            </div>
+            <p class="lead">输入一句松散的话，选择一种训练方向。这里不调用任何外部接口，只在浏览器里做轻量改写提示，适合公开访问。</p>
+            <div class="mode-nav" id="modeNav"></div>
+          </aside>
+          <section class="card lab">
+            <textarea class="text-field" id="draft">通过多维度结构化学习方法，我们可以有效提升中文表达能力。</textarea>
+            <button class="primary" type="button" id="polish">炼句</button>
+            <div class="output" id="output"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section wrap" id="publish">
+        <div class="card">
+          <div class="section-head">
+            <div>
+              <p class="mini">GitHub Pages Ready</p>
+              <h2>为公开上线重做的三件事</h2>
+            </div>
+          </div>
+          <div class="publish-list">
+            <div class="publish-item">
+              <h3>不暴露知识库</h3>
+              <p>页面只保留可公开阅读的好中文卡片，不再引用本地 `wiki-*.md`，也不需要把整个 vault 推到公开仓库。</p>
+            </div>
+            <div class="publish-item">
+              <h3>音源可访问</h3>
+              <p>音乐改为公开授权链接。上线后，访客不用上传文件，打开网页即可播放。</p>
+            </div>
+            <div class="publish-item">
+              <h3>纯静态部署</h3>
+              <p>没有构建步骤，没有服务器。GitHub Pages、Cloudflare Pages、Netlify 都能直接托管。</p>
+            </div>
+          </div>
+          <ul class="source-list" id="sourceList"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer wrap">
+      <span>好中文声房 / static public edition</span>
+    </footer>
+  </div>
+
+  <script>
+    const playlist = [
+      {
+        composer: "巴赫",
+        title: "大提琴无伴奏第一组曲：前奏曲",
+        subtitle: "BWV 1007 · 适合读定义和结构",
+        mood: "秩序、复调、清水。适合读定义。",
+        color: "#2c6c5b",
+        src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Bach_Cello_Suite_1_Prelude_(BWV_1007)_Played_by_Chris.ogg",
+        source: "https://commons.wikimedia.org/wiki/File:Bach_Cello_Suite_1_Prelude_(BWV_1007)_Played_by_Chris.ogg",
+        credit: "Wikimedia Commons open audio"
+      },
+      {
+        composer: "肖邦",
+        title: "夜曲 Op.9 No.2",
+        subtitle: "降 E 大调 · 适合慢读和修改",
+        mood: "夜色、呼吸、细部。适合把句子放慢。",
+        color: "#68527f",
+        src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Chopin_Nocturne_Op_9_No_2.ogg",
+        source: "https://commons.wikimedia.org/wiki/File:Chopin_Nocturne_Op_9_No_2.ogg",
+        credit: "Wikimedia Commons open audio"
+      },
+      {
+        composer: "柴可夫斯基",
+        title: "四季：十月，秋之歌",
+        subtitle: "The Seasons · 适合读故事力",
+        mood: "旋律、情感、场面。适合把观点写成故事。",
+        color: "#a84b3f",
+        src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Tchaikovsky_the_Seasons_October.ogg",
+        source: "https://commons.wikimedia.org/wiki/File:Tchaikovsky_the_Seasons_October.ogg",
+        credit: "Wikimedia Commons open audio"
+      },
+      {
+        composer: "舒伯特",
+        title: "即兴曲 Op.90 No.3",
+        subtitle: "D.899 · 适合写柔软长句",
+        mood: "歌唱、孤独、长线。适合读诗与声音。",
+        color: "#355e7d",
+        src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Schubert%27s_Impromptu_no._3_in_G-flat_major%2C_D.899_-_Chiara_Bertoglio.ogg",
+        source: "https://commons.wikimedia.org/wiki/File:Schubert%27s_Impromptu_no._3_in_G-flat_major,_D.899_-_Chiara_Bertoglio.ogg",
+        credit: "Wikimedia Commons open audio"
+      }
+    ];
+
+    const lessons = [
+      {
+        id: "source",
+        title: "好中文的源头",
+        color: "#2c6c5b",
+        summary: "好中文有三条来路：古典文笔、翻译语言、民间语文。它们共同指向八个字：浅白易明，高雅简洁。",
+        method: "先清楚，再优雅。先让读者看见，再让读者赞叹。",
+        quote: "好中文是有节奏的，像流水，短句子，一句是一句。",
+        loose: "本课程旨在通过系统化方法帮助学习者掌握中文写作能力。",
+        tight: "这门课做一件事：让你的句子更清楚，更好听，也更像人话。",
+        why: "松句把动作藏在抽象词里。紧句把主语、动作、结果都摆到桌面上。"
+      },
+      {
+        id: "story",
+        title: "故事力",
+        color: "#a84b3f",
+        summary: "好中文不是漂亮句子的陈列。它要带人进入故事，让人哭完之后说：活着真好。",
+        method: "把观点放进人物、处境和选择。让读者先跟着走，再明白你的意思。",
+        quote: "好文章也要会讲故事。没有故事力，文章就没有呼吸。",
+        loose: "亲情非常重要，我们应该珍惜家人。",
+        tight: "父亲把最后一块鱼肚子夹给我，说他不爱吃鱼。我二十年后才知道，那是整条鱼最嫩的地方。",
+        why: "松句只喊口号。紧句让一个动作替观点说话。"
+      },
+      {
+        id: "ear",
+        title: "作家之耳",
+        color: "#355e7d",
+        summary: "作家之耳是一种训练过的听力。它能分辨句子的轻重、节奏、气味和真假。",
+        method: "把句子读出声。耳朵皱眉的地方，通常就是文字卡住的地方。",
+        quote: "不是只用眼睛看字，而是让整个身体听见句子。",
+        loose: "在这样的现实语境之下，我产生了一种复杂的情绪感受。",
+        tight: "我站在门口，钥匙插进锁孔，却迟迟没有转动。",
+        why: "松句解释情绪。紧句让身体动作把情绪露出来。"
+      },
+      {
+        id: "curse",
+        title: "知识魔铐",
+        color: "#68527f",
+        summary: "知道太多的人，常常忘记别人还不知道。知识把人铐住，文章就变得像行话密室。",
+        method: "替读者开门。少讲术语，多给两只可以摸到的例子。",
+        quote: "你知道得越多，越要替不知道的人多走一步。",
+        loose: "本工具基于多模态输入实现跨场景知识管理。",
+        tight: "你可以把文字、图片和录音放在一起。下次找资料，不用在三个软件里翻箱倒柜。",
+        why: "松句把好处藏在术语里。紧句把读者今天能省下的麻烦说出来。"
+      },
+      {
+        id: "ladder",
+        title: "抽象阶梯",
+        color: "#a97927",
+        summary: "语言有阶梯。顶端是意义，底部是细节。好文笔就是能上能下。",
+        method: "一句话太空，就往下走。细节太碎，就往上提一层意义。",
+        quote: "幸福到了底部，就变成周日傍晚、红烧肉和桌子底下偷喂狗的孩子。",
+        loose: "城市发展带来了生活方式的改变。",
+        tight: "楼下修鞋摊没了，换成咖啡店。老张现在修鞋，要骑车去两公里外的菜场口。",
+        why: "松句停在中部。紧句给出街道、摊位、人物和距离。"
+      },
+      {
+        id: "rhetoric",
+        title: "修辞意识",
+        color: "#2c6c5b",
+        summary: "修辞不是花活。修辞立其诚。它让表达更精确，也让文字活过来。",
+        method: "不要找漂亮词。找那个唯一正确的字。",
+        quote: "排比像盐一样少放，每个并列分句必须提供新的信息。",
+        loose: "他的失败像一场暴风雨一样沉重而猛烈。",
+        tight: "录取名单贴出来，他看了三遍，把伞忘在公告栏旁边。",
+        why: "松句借陈词制造声势。紧句用一个遗忘的动作写出打击。"
+      },
+      {
+        id: "poetry",
+        title: "诗歌与节奏",
+        color: "#355e7d",
+        summary: "诗歌训练作家之耳。音乐帮助记忆，节奏帮助语言留下来。",
+        method: "先读一首诗，再写一段散文。让句子有呼吸，不让它喘不过气。",
+        quote: "音乐和词是一只鸟的双翼，缺一不飞。",
+        loose: "这件事情让我感受到了时间的流逝和人生的无常。",
+        tight: "院子里的石榴树又红了。去年一起看花的人，今年没有来。",
+        why: "松句概括感受。紧句让时间落到树、花和缺席的人身上。"
+      }
+    ];
+
+    const modes = [
+      { id: "plain", label: "浅白", help: "删虚词，换人话。" },
+      { id: "concrete", label: "具体", help: "补人物、动作、物件。" },
+      { id: "rhythm", label: "节奏", help: "切短句，留呼吸。" },
+      { id: "honest", label: "诚实", help: "去掉元话语。" }
+    ];
+
+    const state = {
+      track: 0,
+      lesson: "source",
+      mode: "plain",
+      playing: false,
+      timer: null
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const audio = $("#audio");
+    const playButton = $("#playButton");
+    const progress = $("#progress");
+    const nowTitle = $("#nowTitle");
+    const nowMeta = $("#nowMeta");
+    const stateText = $("#stateText");
+    const stage = $("#stage");
+    const trackGrid = $("#trackGrid");
+    const lessonNav = $("#lessonNav");
+    const lessonCard = $("#lessonCard");
+    const modeNav = $("#modeNav");
+    const draft = $("#draft");
+    const output = $("#output");
+    const sourceList = $("#sourceList");
+
+    function currentTrack() {
+      return playlist[state.track] || playlist[0];
+    }
+
+    function currentLesson() {
+      return lessons.find((lesson) => lesson.id === state.lesson) || lessons[0];
+    }
+
+    function setTone(color) {
+      document.documentElement.style.setProperty("--tone", color);
+      stage.style.setProperty("--tone", color);
+    }
+
+    function renderPlayer() {
+      const track = currentTrack();
+      setTone(track.color);
+      nowTitle.textContent = `${track.composer}：${track.title}`;
+      nowMeta.textContent = track.mood;
+      stateText.textContent = state.playing ? "playing" : "ready";
+      playButton.textContent = state.playing ? "Ⅱ" : "▶";
+      playButton.setAttribute("aria-label", state.playing ? "暂停" : "播放");
+      trackGrid.innerHTML = playlist.map((item, index) => `
+        <button class="track ${index === state.track ? "is-active" : ""}" type="button" data-track="${index}" style="--tone: ${item.color}">
+          <span class="mini">${item.composer}</span>
+          <strong>${item.title}</strong>
+          <span>${item.subtitle}</span>
+          <span>${item.credit}</span>
+        </button>
+      `).join("");
+    }
+
+    function renderSources() {
+      sourceList.innerHTML = playlist.map((item) => `
+        <li><strong>${item.composer}《${item.title}》</strong>：${item.credit}，音源页面 <a href="${item.source}" target="_blank" rel="noreferrer">Wikimedia Commons</a>。</li>
+      `).join("");
+    }
+
+    function renderLessons() {
+      lessonNav.innerHTML = lessons.map((item) => `
+        <button class="chip" type="button" data-lesson="${item.id}" aria-selected="${item.id === state.lesson}" style="--tone: ${item.color}">${item.title}</button>
+      `).join("");
+
+      const item = currentLesson();
+      lessonCard.style.setProperty("--tone", item.color);
+      lessonCard.innerHTML = `
+        <div class="lesson-title">
+          <p class="mini">Lesson</p>
+          <h2>${item.title}</h2>
+          <p>${item.summary}</p>
+        </div>
+        <div class="tiles">
+          <div class="tile">
+            <h3>抓手</h3>
+            <p>${item.method}</p>
+          </div>
+          <div class="tile">
+            <h3>一句话</h3>
+            <p>${item.quote}</p>
+          </div>
+        </div>
+        <div class="examples">
+          <div class="example bad">
+            <h3>松句</h3>
+            <p>${item.loose}</p>
+          </div>
+          <div class="example good">
+            <h3>紧句</h3>
+            <p>${item.tight}</p>
+          </div>
+        </div>
+        <div class="tile">
+          <h3>为什么</h3>
+          <p>${item.why}</p>
+        </div>
+      `;
+    }
+
+    function renderModes() {
+      modeNav.innerHTML = modes.map((mode) => `
+        <button class="chip" type="button" data-mode="${mode.id}" aria-pressed="${mode.id === state.mode}" style="--tone: #2c6c5b">${mode.label}</button>
+      `).join("");
+    }
+
+    function startProgress() {
+      clearInterval(state.timer);
+      state.timer = setInterval(() => {
+        if (!Number.isFinite(audio.duration) || audio.duration === 0) {
+          progress.style.width = "0%";
+          return;
+        }
+        progress.style.width = `${Math.min(100, (audio.currentTime / audio.duration) * 100)}%`;
+      }, 240);
+    }
+
+    function stopProgress() {
+      clearInterval(state.timer);
+      state.timer = null;
+    }
+
+    async function playCurrent() {
+      const track = currentTrack();
+      if (audio.src !== track.src) {
+        audio.src = track.src;
+        progress.style.width = "0%";
+      }
+      try {
+        await audio.play();
+        state.playing = true;
+        startProgress();
+      } catch (error) {
+        state.playing = false;
+        nowMeta.textContent = "这条外部音源暂时无法播放。请打开来源页面，或替换为你自己的公开音频地址。";
+      }
+      renderPlayer();
+    }
+
+    function pauseCurrent() {
+      audio.pause();
+      state.playing = false;
+      stopProgress();
+      renderPlayer();
+    }
+
+    function polishText(text, mode) {
+      const source = text.trim();
+      if (!source) return "先写一句。";
+      const replacements = [
+        ["通过", "用"],
+        ["进行", ""],
+        ["实现", "做到"],
+        ["提升", "变好"],
+        ["能力", "本领"],
+        ["有效", ""],
+        ["多维度", "几个角度"],
+        ["结构化", "有条理"],
+        ["方法", "办法"],
+        ["产生了一种", "有了"],
+        ["情绪感受", "心情"]
+      ];
+      let lean = source;
+      replacements.forEach(([from, to]) => {
+        lean = lean.replaceAll(from, to);
+      });
+      lean = lean.replace(/\s+/g, " ").replace(/，，/g, "，").trim();
+
+      if (mode === "plain") {
+        return `浅白版：\n${lean}\n\n取舍：删掉空转词，把“进行、实现、提升”换成入口更低的动词。`;
+      }
+      if (mode === "concrete") {
+        return `具体版：\n${lean}\n\n往下走：补一个人、一件物、一个动作。读者能看见，句子才落地。`;
+      }
+      if (mode === "rhythm") {
+        const lines = lean.split(/[，；;]/).map((item) => item.trim()).filter(Boolean);
+        return `节奏版：\n${lines.join("。\n")}${lines.length ? "。" : ""}\n\n耳朵检查：每行只承担一个动作。读到喘不过气，就再切一刀。`;
+      }
+      return `诚实版：\n${lean.replace(/^本文(旨在|将|试图)/, "我想").replace(/综上所述[，,]?/, "")}\n\n去掉元话语：少说“我要怎么说”，直接说事情本身。`;
+    }
+
+    function setupEvents() {
+      playButton.addEventListener("click", () => {
+        if (state.playing) {
+          pauseCurrent();
+        } else {
+          playCurrent();
+        }
+      });
+
+      $("#heroPlay").addEventListener("click", () => {
+        document.querySelector("#music").scrollIntoView({ behavior: "smooth" });
+        playCurrent();
+      });
+
+      trackGrid.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-track]");
+        if (!button) return;
+        state.track = Number(button.dataset.track);
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+        state.playing = false;
+        progress.style.width = "0%";
+        renderPlayer();
+        playCurrent();
+      });
+
+      audio.addEventListener("ended", () => {
+        state.playing = false;
+        stopProgress();
+        progress.style.width = "0%";
+        renderPlayer();
+      });
+
+      lessonNav.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-lesson]");
+        if (!button) return;
+        state.lesson = button.dataset.lesson;
+        renderLessons();
+      });
+
+      modeNav.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-mode]");
+        if (!button) return;
+        state.mode = button.dataset.mode;
+        renderModes();
+        output.textContent = polishText(draft.value, state.mode);
+      });
+
+      $("#polish").addEventListener("click", () => {
+        output.textContent = polishText(draft.value, state.mode);
+      });
+    }
+
+    function drawStaff() {
+      const canvas = $("#staff");
+      const ctx = canvas.getContext("2d");
+      let width = 0;
+      let height = 0;
+      let tick = 0;
+      const chars = ["清", "浅", "雅", "简", "诚", "耳", "诗"];
+
+      function resize() {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function frame() {
+        ctx.clearRect(0, 0, width, height);
+        for (let group = 0; group < 9; group += 1) {
+          const base = 80 + group * 105 + Math.sin(tick * 0.006 + group) * 6;
+          for (let line = 0; line < 5; line += 1) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(29, 37, 32, ${0.06 + line * 0.005})`;
+            ctx.moveTo(0, base + line * 8);
+            ctx.bezierCurveTo(width * 0.28, base + line * 8 + 10, width * 0.7, base + line * 8 - 12, width, base + line * 8);
+            ctx.stroke();
+          }
+        }
+        for (let i = 0; i < 20; i += 1) {
+          const x = ((i * 173 + tick * 0.09) % (width + 160)) - 80;
+          const y = 120 + ((i * 89) % Math.max(240, height - 120));
+          ctx.save();
+          ctx.translate(x, y + Math.sin(tick * 0.008 + i) * 10);
+          ctx.rotate(Math.sin(tick * 0.004 + i) * 0.06);
+          ctx.font = `${24 + (i % 3) * 8}px ${getComputedStyle(document.documentElement).getPropertyValue("--serif")}`;
+          ctx.fillStyle = i % 3 === 0 ? "rgba(168,75,63,0.12)" : i % 3 === 1 ? "rgba(44,108,91,0.13)" : "rgba(53,94,125,0.12)";
+          ctx.fillText(chars[i % chars.length], 0, 0);
+          ctx.restore();
+        }
+        tick += 16;
+        requestAnimationFrame(frame);
+      }
+
+      resize();
+      window.addEventListener("resize", resize);
+      frame();
+    }
+
+    function boot() {
+      renderPlayer();
+      renderSources();
+      renderLessons();
+      renderModes();
+      output.textContent = polishText(draft.value, state.mode);
+      setupEvents();
+      drawStaff();
+    }
+
+    boot();
+  </script>
+</body>
+</html>
